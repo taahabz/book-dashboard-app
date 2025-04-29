@@ -171,6 +171,9 @@ export default function BookList() {
   
   // State for search functionality
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // State for mobile form visibility
+  const [showAddForm, setShowAddForm] = useState(false);
 
   // Function to add a new book
   const addBook = (e) => {
@@ -192,6 +195,9 @@ export default function BookList() {
       
       // Reset the form
       setNewBook({ title: '', author: '' });
+      
+      // Hide the form on mobile after adding
+      setShowAddForm(false);
     }
   };
 
@@ -230,92 +236,160 @@ export default function BookList() {
   );
 
   return (
-    <div className="h-full px-3 md:px-4 py-4 md:py-8 max-w-4xl mx-auto">
-      <div className="mb-4 md:mb-8">
-        <h2 className="text-xl md:text-2xl font-semibold text-[#00c8ff] mb-4 md:mb-6">Book Collection</h2>
-        <input
-          type="text"
-          placeholder="Search books..."
-          value={searchTerm}
-          onChange={handleSearchChange}
-          className="w-full px-3 md:px-4 py-2 md:py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition mb-4 md:mb-8"
-          style={{ color: 'white' }}
-        />
+    <div className="h-full px-4 py-5 max-w-lg mx-auto">
+      <div className="md:flex md:items-center mb-6 hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-6 sm:w-6 text-[#00c8ff] mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+        <h2 className="text-xl sm:text-2xl font-semibold text-[#00c8ff]">Book Collection</h2>
       </div>
       
-      <div>
-        <div className="text-[#00c8ff] font-medium mb-3 md:mb-4">Book List</div>
-        <div className="space-y-0">
-          {filteredBooks.map(book => (
-            <div key={book.id} className="border-b border-[#1e3a8a] py-2 md:py-3">
-              <div className="text-white font-medium">{book.title}</div>
-              <div className="text-gray-400 text-sm">{book.author}</div>
-              {role === 'admin' && (
-                <div className="mt-1 flex space-x-2">
-                  <button 
-                    className="text-xs text-[#00c8ff] hover:underline"
-                    onClick={() => {
-                      const updatedTitle = prompt('Enter new title:', book.title);
-                      const updatedAuthor = prompt('Enter new author:', book.author);
-                      if (updatedTitle && updatedAuthor) {
-                        editBook({...book, title: updatedTitle, author: updatedAuthor});
-                      }
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button 
-                    className="text-xs text-red-400 hover:underline"
-                    onClick={() => deleteBook(book.id)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              )}
-            </div>
-          ))}
-          {filteredBooks.length === 0 && (
-            <div className="text-center text-gray-400 py-4">
-              No books found. Try a different search term or add some books!
-            </div>
-          )}
+      <div className="mb-5">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search books..."
+            value={searchTerm}
+            onChange={handleSearchChange}
+            className="w-full px-4 py-3 pl-10 rounded-lg bg-[#111827] border border-[#1e3a8a] focus:border-[#00c8ff] transition text-white"
+          />
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-400 absolute left-3 top-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
         </div>
       </div>
       
-      {role === 'admin' && (
-        <div className="mt-8 md:mt-12 pt-4 md:pt-6 border-t border-[#1e3a8a]">
-          <div className="flex items-center mb-4 md:mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-[#00c8ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <div className="mb-4 flex justify-between items-center">
+        <div className="text-[#00c8ff] font-medium">Book List</div>
+        {role === 'admin' && (
+          <button 
+            onClick={() => setShowAddForm(!showAddForm)}
+            className="flex items-center text-sm text-[#00c8ff] hover:underline"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
-            <div className="text-[#00c8ff] font-medium">Add New Book</div>
-          </div>
-          <form onSubmit={addBook} className="space-y-4 md:space-y-6">
+            {showAddForm ? 'Cancel' : 'Add Book'}
+          </button>
+        )}
+      </div>
+      
+      {role === 'admin' && showAddForm && (
+        <div className="mb-6 bg-[#111827] p-4 rounded-lg border border-[#1e3a8a]">
+          <form onSubmit={addBook} className="space-y-4">
             <div>
-              <label className="block text-gray-400 mb-1 md:mb-2">Title</label>
+              <label className="block text-gray-400 mb-1 text-sm">Title</label>
               <input
                 type="text"
                 name="title"
                 value={newBook.title}
                 onChange={handleInputChange}
-                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition"
+                className="w-full px-3 py-2.5 rounded bg-[#0a0e1a] border border-[#1e3a8a] focus:border-[#00c8ff] transition text-white"
                 required
               />
             </div>
             <div>
-              <label className="block text-gray-400 mb-1 md:mb-2">Author</label>
+              <label className="block text-gray-400 mb-1 text-sm">Author</label>
               <input
                 type="text"
                 name="author"
                 value={newBook.author}
                 onChange={handleInputChange}
-                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition"
+                className="w-full px-3 py-2.5 rounded bg-[#0a0e1a] border border-[#1e3a8a] focus:border-[#00c8ff] transition text-white"
                 required
               />
             </div>
             <button
               type="submit"
-              className="w-full py-2 bg-[#00c8ff] text-[#0a0e1a] rounded font-medium hover:opacity-90 transition mt-2"
+              className="w-full py-2.5 bg-[#00c8ff] text-[#0a0e1a] rounded font-medium hover:opacity-90 transition"
+            >
+              Add Book
+            </button>
+          </form>
+        </div>
+      )}
+      
+      <div className="space-y-3 overflow-y-auto pb-20">
+        {filteredBooks.map(book => (
+          <div key={book.id} className="bg-[#111827] rounded-lg border border-[#1e3a8a] p-3">
+            <div className="text-white font-medium">{book.title}</div>
+            <div className="text-gray-400 text-sm">{book.author}</div>
+            {role === 'admin' && (
+              <div className="mt-2 flex space-x-3">
+                <button 
+                  className="text-xs text-[#00c8ff] hover:underline"
+                  onClick={() => {
+                    const updatedTitle = prompt('Enter new title:', book.title);
+                    const updatedAuthor = prompt('Enter new author:', book.author);
+                    if (updatedTitle && updatedAuthor) {
+                      editBook({...book, title: updatedTitle, author: updatedAuthor});
+                    }
+                  }}
+                >
+                  Edit
+                </button>
+                <button 
+                  className="text-xs text-red-400 hover:underline"
+                  onClick={() => deleteBook(book.id)}
+                >
+                  Remove
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+        {filteredBooks.length === 0 && (
+          <div className="text-center text-gray-400 py-8 bg-[#111827] rounded-lg border border-[#1e3a8a]">
+            No books found. Try a different search term or add some books!
+          </div>
+        )}
+      </div>
+      
+      {role === 'admin' && !showAddForm && (
+        <button
+          onClick={() => setShowAddForm(true)}
+          className="fixed bottom-4 right-4 bg-[#00c8ff] text-[#0a0e1a] w-12 h-12 rounded-full flex items-center justify-center shadow-lg md:hidden"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+          </svg>
+        </button>
+      )}
+      
+      {role === 'admin' && !showAddForm && (
+        <div className="mt-8 pt-5 border-t border-[#1e3a8a] hidden md:block">
+          <div className="flex items-center mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-[#00c8ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <div className="text-[#00c8ff] font-medium">Add New Book</div>
+          </div>
+          <form onSubmit={addBook} className="space-y-4">
+            <div>
+              <label className="block text-gray-400 mb-1">Title</label>
+              <input
+                type="text"
+                name="title"
+                value={newBook.title}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2.5 rounded bg-[#111827] border border-[#1e3a8a] focus:border-[#00c8ff] transition text-white"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-gray-400 mb-1">Author</label>
+              <input
+                type="text"
+                name="author"
+                value={newBook.author}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2.5 rounded bg-[#111827] border border-[#1e3a8a] focus:border-[#00c8ff] transition text-white"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full py-2.5 bg-[#00c8ff] text-[#0a0e1a] rounded font-medium hover:opacity-90 transition"
             >
               Add Book
             </button>

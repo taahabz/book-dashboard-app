@@ -3,8 +3,15 @@ import RoleSwitcher from './components/RoleSwitcher';
 import ProfileEditor from './components/ProfileEditor';
 import BookList from './components/BookList';
 import './App.css';
+import { useState } from 'react';
 
 function App() {
+  const [activePanel, setActivePanel] = useState('books'); // 'profile' or 'books'
+
+  const togglePanel = (panel) => {
+    setActivePanel(panel);
+  };
+
   return (
     <RoleProvider>
       <div className="min-h-screen bg-[#0a0e1a] flex flex-col">
@@ -16,11 +23,46 @@ function App() {
             </div>
             <RoleSwitcher />
           </header>
+          
+          {/* Mobile Navigation */}
+          <div className="md:hidden flex border-b border-[#1e3a8a]">
+            <button 
+              onClick={() => togglePanel('profile')}
+              className={`flex-1 py-3 text-center text-sm font-medium ${
+                activePanel === 'profile' 
+                  ? 'text-[#00c8ff] border-b-2 border-[#00c8ff]' 
+                  : 'text-gray-400'
+              }`}
+            >
+              <div className="flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Profile
+              </div>
+            </button>
+            <button 
+              onClick={() => togglePanel('books')}
+              className={`flex-1 py-3 text-center text-sm font-medium ${
+                activePanel === 'books' 
+                  ? 'text-[#00c8ff] border-b-2 border-[#00c8ff]' 
+                  : 'text-gray-400'
+              }`}
+            >
+              <div className="flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                Books
+              </div>
+            </button>
+          </div>
+          
           <main className="flex flex-col md:flex-row flex-1 overflow-hidden">
-            <div className="w-full md:w-1/2 overflow-y-auto border-b md:border-b-0 md:border-r border-[#1e3a8a]">
+            <div className={`w-full md:w-1/2 overflow-y-auto md:border-r border-[#1e3a8a] ${activePanel === 'profile' ? 'block' : 'hidden md:block'}`}>
               <ProfileEditor />
             </div>
-            <div className="w-full md:w-1/2 overflow-y-auto">
+            <div className={`w-full md:w-1/2 overflow-y-auto ${activePanel === 'books' ? 'block' : 'hidden md:block'}`}>
               <BookList />
             </div>
           </main>
