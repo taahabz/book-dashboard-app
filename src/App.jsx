@@ -26,6 +26,12 @@ function App() {
           </main>
           <footer className="text-center text-[#00c8ff]/40 py-3 px-6 border-t border-blue-500/20">
             <p>Bookparho App © {new Date().getFullYear()}</p>
+            <p>
+              Created with ❤️ by <a href="https://github.com/taahabz" className="text-[#00c8ff] hover:underline">Taaha</a>  
+              <a href="https://github.com/hubgit1899" className="text-[#00c8ff] hover:underline">  Junaid</a>
+              <a href="https://github.com/HamzaHannan001" className="text-[#00c8ff] hover:underline">      Hamza</a>
+            
+            </p>
           </footer>
         </div>
       </div>

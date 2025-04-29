@@ -39,11 +39,12 @@ export default function ProfileEditor() {
         <div>
           <div className="text-[#00c8ff] font-medium mb-2">Name</div>
           <input
-            type="text"
-            value={profile.name}
-            onChange={handleNameChange}
-            className="w-full px-4 py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition"
-          />
+  type="text"
+  value={profile.name}
+  onChange={handleNameChange}
+  className="w-full px-4 py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition"
+  style={{ color: 'white' }}
+/>
         </div>
         
         <div>
@@ -53,6 +54,8 @@ export default function ProfileEditor() {
             value={profile.age}
             onChange={handleAgeChange}
             className="w-full px-4 py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition"
+            style={{ color: 'white' }}
+
           />
         </div>
         
