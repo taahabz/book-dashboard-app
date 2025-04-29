@@ -230,25 +230,24 @@ export default function BookList() {
   );
 
   return (
-    <div className="h-full px-4 py-8">
-      <div className="mb-8">
-        <h2 className="text-2xl font-semibold text-[#00c8ff] mb-6">Book Collection</h2>
+    <div className="h-full px-3 md:px-4 py-4 md:py-8 max-w-4xl mx-auto">
+      <div className="mb-4 md:mb-8">
+        <h2 className="text-xl md:text-2xl font-semibold text-[#00c8ff] mb-4 md:mb-6">Book Collection</h2>
         <input
           type="text"
           placeholder="Search books..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className="w-full px-4 py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition mb-8"
+          className="w-full px-3 md:px-4 py-2 md:py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition mb-4 md:mb-8"
           style={{ color: 'white' }}
-
         />
       </div>
       
       <div>
-        <div className="text-[#00c8ff] font-medium mb-4">Book List</div>
+        <div className="text-[#00c8ff] font-medium mb-3 md:mb-4">Book List</div>
         <div className="space-y-0">
           {filteredBooks.map(book => (
-            <div key={book.id} className="border-b border-[#1e3a8a] py-3">
+            <div key={book.id} className="border-b border-[#1e3a8a] py-2 md:py-3">
               <div className="text-white font-medium">{book.title}</div>
               <div className="text-gray-400 text-sm">{book.author}</div>
               {role === 'admin' && (
@@ -284,39 +283,39 @@ export default function BookList() {
       </div>
       
       {role === 'admin' && (
-        <div className="mt-12 pt-6 border-t border-[#1e3a8a]">
-          <div className="flex items-center mb-6">
+        <div className="mt-8 md:mt-12 pt-4 md:pt-6 border-t border-[#1e3a8a]">
+          <div className="flex items-center mb-4 md:mb-6">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1 text-[#00c8ff]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
             <div className="text-[#00c8ff] font-medium">Add New Book</div>
           </div>
-          <form onSubmit={addBook} className="space-y-6">
+          <form onSubmit={addBook} className="space-y-4 md:space-y-6">
             <div>
-              <label className="block text-gray-400 mb-2">Title</label>
+              <label className="block text-gray-400 mb-1 md:mb-2">Title</label>
               <input
                 type="text"
                 name="title"
                 value={newBook.title}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition"
+                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition"
                 required
               />
             </div>
             <div>
-              <label className="block text-gray-400 mb-2">Author</label>
+              <label className="block text-gray-400 mb-1 md:mb-2">Author</label>
               <input
                 type="text"
                 name="author"
                 value={newBook.author}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition"
+                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-sm bg-transparent border-b border-[#1e3a8a] focus:border-[#00c8ff] transition"
                 required
               />
             </div>
             <button
               type="submit"
-              className="w-full py-2 bg-[#00c8ff] text-[#0a0e1a] rounded font-medium hover:opacity-90 transition"
+              className="w-full py-2 bg-[#00c8ff] text-[#0a0e1a] rounded font-medium hover:opacity-90 transition mt-2"
             >
               Add Book
             </button>

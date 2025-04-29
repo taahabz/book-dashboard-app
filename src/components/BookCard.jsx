@@ -23,7 +23,7 @@ export default function BookCard({ book, onDelete, onEdit }) {
   return (
     <div className="bg-[#111827] rounded-md border border-[#1e3a8a] overflow-hidden">
       {isEditing ? (
-        <form onSubmit={handleEditSubmit} className="p-4 space-y-3">
+        <form onSubmit={handleEditSubmit} className="p-3 sm:p-4 space-y-2 sm:space-y-3">
           <div>
             <label className="block text-xs text-[#00c8ff] mb-1">Title</label>
             <input
@@ -31,7 +31,7 @@ export default function BookCard({ book, onDelete, onEdit }) {
               name="title"
               value={editedBook.title}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 rounded bg-[#0f172a] border border-[#1e3a8a]"
+              className="w-full px-2 sm:px-3 py-1.5 sm:py-2 rounded bg-[#0f172a] border border-[#1e3a8a] text-sm"
               required
             />
           </div>
@@ -43,7 +43,7 @@ export default function BookCard({ book, onDelete, onEdit }) {
               name="author"
               value={editedBook.author}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 rounded bg-[#0f172a] border border-[#1e3a8a]"
+              className="w-full px-2 sm:px-3 py-1.5 sm:py-2 rounded bg-[#0f172a] border border-[#1e3a8a] text-sm"
               required
             />
           </div>
@@ -51,7 +51,7 @@ export default function BookCard({ book, onDelete, onEdit }) {
           <div className="flex space-x-2 pt-2">
             <button 
               type="submit"
-              className="px-3 py-1.5 text-sm bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+              className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
             >
               Save
             </button>
@@ -61,36 +61,36 @@ export default function BookCard({ book, onDelete, onEdit }) {
                 setIsEditing(false);
                 setEditedBook({...book});
               }}
-              className="px-3 py-1.5 text-sm bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+              className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
             >
               Cancel
             </button>
           </div>
         </form>
       ) : (
-        <div className="flex items-center justify-between p-4">
+        <div className="flex items-center justify-between p-3 sm:p-4">
           <div className="flex-1">
-            <h3 className="font-medium text-white">{book.title}</h3>
-            <p className="text-gray-400 text-sm">{book.author}</p>
+            <h3 className="font-medium text-sm sm:text-base text-white">{book.title}</h3>
+            <p className="text-gray-400 text-xs sm:text-sm">{book.author}</p>
           </div>
           
           {role === 'admin' && (
             <div className="flex space-x-2">
               <button 
                 onClick={() => setIsEditing(true)}
-                className="p-1.5 text-blue-400 hover:text-blue-300 transition-colors"
+                className="p-1 sm:p-1.5 text-blue-400 hover:text-blue-300 transition-colors"
                 aria-label="Edit book"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 sm:h-4 sm:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                 </svg>
               </button>
               <button 
                 onClick={() => onDelete(book.id)}
-                className="p-1.5 text-red-400 hover:text-red-300 transition-colors"
+                className="p-1 sm:p-1.5 text-red-400 hover:text-red-300 transition-colors"
                 aria-label="Delete book"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 sm:h-4 sm:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </button>
